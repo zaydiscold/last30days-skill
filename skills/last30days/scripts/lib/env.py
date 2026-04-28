@@ -379,6 +379,30 @@ def get_config() -> dict[str, Any]:
             config[key] = value
             config[f"_{key}_SOURCE"] = "browser"
 
+    import random
+    rotatable = (
+        'APIFY_API_TOKEN',
+        'BRAVE_API_KEY',
+        'BSKY_APP_PASSWORD',
+        'EXA_API_KEY',
+        'GEMINI_API_KEY',
+        'GOOGLE_API_KEY',
+        'GOOGLE_GENAI_API_KEY',
+        'OPENAI_API_KEY',
+        'OPENROUTER_API_KEY',
+        'PARALLEL_API_KEY',
+        'SERPER_API_KEY',
+        'TRUTHSOCIAL_TOKEN',
+        'XAI_API_KEY',
+        'XQUIK_API_KEY',
+    )
+    for _k in rotatable:
+        _raw = config.get(_k) or ''
+        if ',' in _raw:
+            _vals = [v.strip() for v in _raw.split(',') if v.strip()]
+            if _vals:
+                config[_k] = random.choice(_vals)
+
     return config
 
 
